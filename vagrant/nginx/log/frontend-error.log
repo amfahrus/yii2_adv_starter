@@ -1,0 +1,1 @@
+2017/07/29 07:25:15 [error] 1712#0: *9 directory index of "/app/frontend/web/" is forbidden, client: 10.10.50.71, server: 10.10.50.220, request: "GET / HTTP/1.1", host: "10.10.50.220:181"
