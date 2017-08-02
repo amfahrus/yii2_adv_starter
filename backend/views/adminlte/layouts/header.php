@@ -16,7 +16,9 @@ use yii\helpers\Html;
         </a>
 
         <div class="navbar-custom-menu">
-
+          <?php if (!Yii::$app->user->isGuest)
+          {
+          ?>
             <ul class="nav navbar-nav">
 
                 <li class="dropdown user user-menu">
@@ -70,6 +72,9 @@ use yii\helpers\Html;
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                 </li>-->
             </ul>
+            <?php
+            }
+            ?>
         </div>
     </nav>
 </header>

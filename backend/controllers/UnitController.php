@@ -6,7 +6,6 @@ use Yii;
 use backend\models\Unit;
 use backend\models\UnitSearch;
 use yii\web\Controller;
-use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -84,9 +83,7 @@ class UnitController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if ($model->unitParent) {
-            $model->parent_name = $model->unitParent->unit_name;
-        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->p_master_unit_id]);
         } else {

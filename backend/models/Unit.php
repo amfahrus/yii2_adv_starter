@@ -5,20 +5,36 @@ namespace backend\models;
 use Yii;
 
 /**
- * This is the model class for table "t_unit".
+ * This is the model class for table "p_master_unit".
  *
- * @property integer $unit_id
+ * @property integer $p_master_unit_id
  * @property string $unit_name
  * @property string $unit_code
  * @property integer $unit_status
  * @property integer $unit_parent
+ * @property integer $unit_capacity
+ * @property double $unit_latlng
+ * @property integer $unit_radius
+ * @property double $unit_price
+ * @property double $unit_price_overtime
+ * @property double $unit_price_pickup
+ * @property double $unit_price_delivery
+ * @property integer $monday
+ * @property integer $tuesday
+ * @property integer $wednesday
+ * @property integer $thursday
+ * @property integer $friday
+ * @property integer $saturday
+ * @property integer $sunday
+ *
+ * @property TUserUnit[] $tUserUnits
  */
 class Unit extends \yii\db\ActiveRecord
 {
-    public $parent_name;
     /**
      * @inheritdoc
      */
+
     public static function tableName()
     {
         return 'p_master_unit';
@@ -27,35 +43,18 @@ class Unit extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public $hours;
+    public $label;
+    public $price;
     public function rules()
     {
         return [
-            [['unit_name', 'unit_code'], 'string'],
-            [['unit_status', 'unit_parent'], 'integer'],
-            [['parent_name'], 'in',
-                'range' => static::find()->select(['unit_name'])->column(),
-                'message' => 'Unit "{value}" not found.'],
+            [['unit_name', 'unit_code', 'unit_status'], 'required'],
+            [['unit_status', 'unit_parent', 'unit_capacity', 'unit_radius', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'], 'integer'],
+            [['hours','price', 'unit_price_6', 'unit_price_12'], 'number'],
+            [['unit_lat', 'unit_lng', 'unit_price_overtime', 'unit_price_pickup', 'unit_price_delivery'], 'string', 'max' => 55],
+            [['label','unit_name', 'unit_code'], 'string', 'max' => 45],
         ];
-    }
-
-
-    /**
-     * Use to loop detected.
-     */
-    public function filterParent()
-    {
-        $parent = $this->parent;
-        $db = static::getDb();
-        $query = (new Query)->select(['unit_parent'])
-            ->from(static::tableName())
-            ->where('[[id]]=:id');
-        while ($parent) {
-            if ($this->id == $parent) {
-                $this->addError('parent_name', 'Loop detected.');
-                return;
-            }
-            $parent = $query->params([':id' => $parent])->scalar($db);
-        }
     }
 
     /**
@@ -64,31 +63,35 @@ class Unit extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'p_master_unit_id' => 'Unit ID',
+            'p_master_unit_id' => 'P Master Unit ID',
             'unit_name' => 'Unit Name',
             'unit_code' => 'Unit Code',
             'unit_status' => 'Unit Status',
             'unit_parent' => 'Unit Parent',
-            'parent_name' => 'Parent Name',
+            'unit_capacity' => 'Unit Capacity',
+            'unit_lat' => 'Unit Latitude',
+            'unit_lng' => 'Unit Longitude',
+            'unit_radius' => 'Unit Radius Meter',
+            'unit_price_6' => 'Unit Price 6 Hour',
+            'unit_price_12' => 'Unit Price 12 Hour',
+            'unit_price_overtime' => 'Unit Price Overtime',
+            'unit_price_pickup' => 'Unit Price Pickup',
+            'unit_price_delivery' => 'Unit Price Delivery',
+            'monday' => 'Monday',
+            'tuesday' => 'Tuesday',
+            'wednesday' => 'Wednesday',
+            'thursday' => 'Thursday',
+            'friday' => 'Friday',
+            'saturday' => 'Saturday',
+            'sunday' => 'Sunday',
         ];
     }
 
     /**
-     * Get menu parent
      * @return \yii\db\ActiveQuery
      */
-    public function getUnitParent()
+    public function getTUserUnits()
     {
-        return $this->hasOne(Unit::className(), ['p_master_unit_id' => 'unit_parent']);
-    }
-
-    public static function getUnitSource()
-    {
-        $tableName = static::tableName();
-        return (new \yii\db\Query())
-                ->select(['u.p_master_unit_id', 'u.unit_name', 'u.unit_code', 'u.unit_status', 'parent_name' => 'p.unit_name'])
-                ->from(['u' => $tableName])
-                ->leftJoin(['p' => $tableName], '[[u.unit_parent]]=[[p.p_master_unit_id]]')
-                ->all(static::getDb());
+        return $this->hasMany(TUserUnit::className(), ['p_master_unit_id' => 'p_master_unit_id']);
     }
 }

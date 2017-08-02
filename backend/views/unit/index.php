@@ -24,17 +24,27 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'p_master_unit_id',
+            //'p_master_unit_id',
             'unit_name',
-            'unit_code',
-            'unit_status',
-            [
-                'attribute' => 'unitParent.unit_name',
-                'filter' => Html::activeTextInput($searchModel, 'parent_name', [
-                    'class' => 'form-control', 'id' => null
-                ]),
-                'label' => 'Parent',
-            ],
+            //'unit_code',
+            //'unit_status',
+            //'unit_parent',
+            'unit_capacity',
+            // 'unit_lat',
+            // 'unit_lng',
+            // 'unit_radius',
+            'unit_price_6',
+            'unit_price_12',
+            'unit_price_overtime',
+            'unit_price_pickup',
+            'unit_price_delivery',
+            // 'monday',
+            // 'tuesday',
+            // 'wednesday',
+            // 'thursday',
+            // 'friday',
+            // 'saturday',
+            // 'sunday',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -20,5 +20,12 @@ return [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
+        'formatter' => [
+           'class' => 'yii\i18n\Formatter',
+           'locale' => 'id-ID', //ej. 'es-ES'
+           'thousandSeparator' => '.',
+           'decimalSeparator' => ',',
+           'currencyCode' => 'Rp',
+        ],
     ],
 ];

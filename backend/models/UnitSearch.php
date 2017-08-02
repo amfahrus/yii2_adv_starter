@@ -18,8 +18,10 @@ class UnitSearch extends Unit
     public function rules()
     {
         return [
-            [['p_master_unit_id', 'unit_status', 'unit_parent'], 'integer'],
+            [['p_master_unit_id', 'unit_status', 'unit_parent', 'unit_capacity', 'unit_radius', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'], 'integer'],
             [['unit_name', 'unit_code'], 'safe'],
+            [['unit_price_6', 'unit_price_12'], 'number'],
+            [['unit_lat', 'unit_lng', 'unit_price_overtime', 'unit_price_pickup', 'unit_price_delivery'], 'string', 'max' => 55],
         ];
     }
 
@@ -69,6 +71,22 @@ class UnitSearch extends Unit
             'p_master_unit_id' => $this->p_master_unit_id,
             'unit_status' => $this->unit_status,
             'unit_parent' => $this->unit_parent,
+            'unit_capacity' => $this->unit_capacity,
+            'unit_lat' => $this->unit_lat,
+            'unit_lng' => $this->unit_lng,
+            'unit_radius' => $this->unit_radius,
+            'unit_price_6' => $this->unit_price_6,
+            'unit_price_12' => $this->unit_price_12,
+            'unit_price_overtime' => $this->unit_price_overtime,
+            'unit_price_pickup' => $this->unit_price_pickup,
+            'unit_price_delivery' => $this->unit_price_delivery,
+            'monday' => $this->monday,
+            'tuesday' => $this->tuesday,
+            'wednesday' => $this->wednesday,
+            'thursday' => $this->thursday,
+            'friday' => $this->friday,
+            'saturday' => $this->saturday,
+            'sunday' => $this->sunday,
         ]);
 
         $query->andFilterWhere(['like', 'unit_name', $this->unit_name])

@@ -19,7 +19,11 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "dmstr/yii2-adminlte-asset": "2.*",
-        "mdmsoft/yii2-admin": "~2.0"
+        "mdmsoft/yii2-admin": "~2.0",
+        "2amigos/yii2-date-time-picker-widget": "~1.0",
+        "2amigos/yii2-date-picker-widget": "~1.0",
+        "kartik-v/dependent-dropdown": "dev-master",
+        "2amigos/yii2-google-maps-library": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

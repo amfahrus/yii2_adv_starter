@@ -153,6 +153,10 @@ class UserdataInternalController extends Controller
     {
         $this->findModel($id)->delete();
 
+        if (($model = UserdataInternal::findOne($id)) !== null) {
+              User::findOne($model->user_id)->delete();
+        }
+
         return $this->redirect(['index']);
     }
 

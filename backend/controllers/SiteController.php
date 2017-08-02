@@ -26,6 +26,11 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['backend'],
+                    ],
+                    [
                         'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],

@@ -24,6 +24,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'email') ?>
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
+                
+                <?= $form->field($model, 'customer_name')->textInput(['maxlength' => true]) ?>
+
+                <?= $form->field($model, 'customer_phone')->textInput(['maxlength' => true]) ?>
+
+                <?= $form->field($model, 'customer_address')->textarea(['rows' => 6]) ?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
