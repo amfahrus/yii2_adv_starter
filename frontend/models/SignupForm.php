@@ -73,10 +73,20 @@ class SignupForm extends Model
            $model->customer_name = $this->customer_name;
            $model->customer_phone = $this->customer_phone;
            $model->customer_address = $this->customer_address;
+           $model->customer_code = $this->getCode();
            $model->save();
            return $user;
         } else {
           return null;
+        }
+    }
+
+    protected function getCode()
+    {
+        if (($model = Customer::find()->orderBy('customer_id DESC')->one()) !== null) {
+            return str_pad($model->customer_id, 4, '0', STR_PAD_LEFT).'/'.date("m").date("y");
+        } else {
+            return str_pad(1, 4, '0', STR_PAD_LEFT).'/'.date("m").date("y");
         }
     }
 }
