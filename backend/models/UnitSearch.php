@@ -18,7 +18,7 @@ class UnitSearch extends Unit
     public function rules()
     {
         return [
-            [['p_master_unit_id', 'unit_status', 'unit_parent', 'unit_capacity', 'unit_radius', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'], 'integer'],
+            [['p_master_unit_id', 'unit_status', 'unit_parent', 'unit_capacity', 'unit_radius', 'unit_member_discount', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'], 'integer'],
             [['unit_name', 'unit_code'], 'safe'],
             [['unit_price_6', 'unit_price_12'], 'number'],
             [['unit_lat', 'unit_lng', 'unit_price_overtime', 'unit_price_pickup', 'unit_price_delivery'], 'string', 'max' => 55],
@@ -77,6 +77,7 @@ class UnitSearch extends Unit
             'unit_radius' => $this->unit_radius,
             'unit_price_6' => $this->unit_price_6,
             'unit_price_12' => $this->unit_price_12,
+            'unit_member_discount' => $this->unit_member_discount,
             'unit_price_overtime' => $this->unit_price_overtime,
             'unit_price_pickup' => $this->unit_price_pickup,
             'unit_price_delivery' => $this->unit_price_delivery,

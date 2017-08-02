@@ -39,9 +39,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'order_lat',
             'order_lng',
             'order_hours',
-            [
+            /*[
                 'attribute' =>'order_price',
                 'value'=> Yii::$app->formatter->asCurrency($model->order_price),
+            ],*/
+            [
+                'attribute' =>'order_price',
+                'format'=>[
+                    'decimal',
+                    0,
+                ]
             ],
             [
                'attribute' => 'order_pickup',
@@ -55,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'order_start',
             'order_finish',
-            [
+            /*[
                 'attribute' =>'order_cost_pickup',
                 'value'=> (!empty($model->order_cost_pickup))?Yii::$app->formatter->asCurrency($model->order_cost_pickup):null,
             ],
@@ -70,6 +77,34 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' =>'order_total_cost',
                 'value'=> (!empty($model->order_total_cost))?Yii::$app->formatter->asCurrency($model->order_total_cost):null,
+            ],*/
+            [
+                'attribute' =>'order_cost_pickup',
+                'format'=>[
+                    'decimal',
+                    0,
+                ]
+            ],
+            [
+                'attribute' =>'order_cost_delivery',
+                'format'=>[
+                    'decimal',
+                    0,
+                ]
+            ],
+            [
+                'attribute' =>'order_cost_overtime',
+                'format'=>[
+                    'decimal',
+                    0,
+                ]
+            ],
+            [
+                'attribute' =>'order_total_cost',
+                'format'=>[
+                    'decimal',
+                    0,
+                ]
             ],
             //'order_cost_pickup',
             //'order_cost_delivery',

@@ -8,6 +8,7 @@ use backend\models\Customer;
 use backend\models\Unit;
 use dosamigos\datepicker\DatePicker;
 use dosamigos\datetimepicker\DateTimePicker;
+use kartik\select2\Select2;
 
 $this->registerJs(
     "$('#order-order_hours').on('change', function() {
@@ -28,7 +29,7 @@ $this->registerJsFile(
 /* @var $this yii\web\View */
 /* @var $model backend\models\Order */
 /* @var $form yii\widgets\ActiveForm */
-$customer = ArrayHelper::map(Customer::find()->all(),'customer_id','customer_name');
+$customer = ArrayHelper::map(Customer::find()->select(["customer_id","CONCAT(customer_code,' - ',customer_name) as customer_name"])->all(),"customer_id","customer_name");
 $unit = ArrayHelper::map(Unit::find()->all(),'p_master_unit_id','unit_name');
 $listData= array(
     0 => 'Tidak',
@@ -39,13 +40,29 @@ $listData= array(
 <div class="order-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
+    <!--
     <?= $form->field($model, 'customer_id')->dropdownList($customer,['prompt'=>'-Customer-',
       'onchange'=>'
         $.get( "'.urldecode(Yii::$app->urlManager->createUrl('order/address/?id=')).'"+$(this).val(), function( data ) {
           $( "#address" ).text( data );
         });
-    ']) ?>
+    ']) ?>-->
+
+    <?= $form->field($model, 'customer_id')->widget(Select2::classname(), [
+        'data' => $customer,
+        'language' => 'en',
+        'options' => ['placeholder' => '-Customer-'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+        'pluginEvents' => [
+            'change' => 'function() {
+              $.get( "'.urldecode(Yii::$app->urlManager->createUrl('order/address/?id=')).'"+$(this).val(), function( data ) {
+                $( "#address" ).text( data );
+              });
+             }',
+        ],
+    ]); ?>
 
     <?= $form->field($model, 'p_master_unit_id')->dropdownList($unit,['prompt'=>'-Unit-',
       'onchange'=>'
@@ -114,8 +131,12 @@ $listData= array(
             function (e){
               if($(\'#order-p_master_unit_id\').val() > 0){
                   $.getJSON( "'.urldecode(Yii::$app->urlManager->createUrl('order/capacity/')).'?id="+$(\'#order-p_master_unit_id\').val()+"&date="+e.format(), function( data ) {
-                    if(Number(data.registered) == Number(data.capacity)){
+                    if(Number(data.registered) == Number(data.capacity) && Number(data.open) > 0){
                       alert(\'Sudah Penuh Terisi \'+data.registered+\' Pendaftar, Silahkan Coba Tanggal Lain!\');
+                      $("#order-order_date").val("");
+                    }
+                    if(Number(data.open) == 0){
+                      alert(\'Libur pada hari yang dipilih, Silahkan Coba Tanggal Lain!\');
                       $("#order-order_date").val("");
                     }
                     //alert(data);

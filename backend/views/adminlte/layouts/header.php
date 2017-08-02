@@ -9,17 +9,20 @@ use yii\helpers\Html;
 
     <?= Html::a('<span class="logo-mini">APP</span><span class="logo-lg">' . Yii::$app->name . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
-    <nav class="navbar navbar-static-top navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-static-top" role="navigation">
 
-        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" style='display: none'>
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
 
         <div class="navbar-custom-menu">
-          <?php if (!Yii::$app->user->isGuest)
-          {
-          ?>
+
             <ul class="nav navbar-nav">
+
+            <?php if (!Yii::$app->user->isGuest)
+              {
+             ?>
+                <!-- User Account: style can be found in dropdown.less -->
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -67,14 +70,14 @@ use yii\helpers\Html;
                     </ul>
                 </li>
 
+            <?php
+            }
+            ?>
                 <!-- User Account: style can be found in dropdown.less -->
                 <!--<li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                 </li>-->
             </ul>
-            <?php
-            }
-            ?>
         </div>
     </nav>
 </header>

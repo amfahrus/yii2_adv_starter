@@ -70,6 +70,8 @@ class OrderController extends Controller
         $model = new Order();
         //die(var_dump(Yii::$app->request->post()));
         if ($model->load(Yii::$app->request->post())) {
+            $unit = Unit::find()->where(['=','p_master_unit_id', $_POST['Order']['p_master_unit_id']])->asArray()->one();
+            $customer = Customer::find()->where(['=','customer_id', $_POST['Order']['customer_id']])->asArray()->one();
             $model->customer_id = $_POST['Order']['customer_id'];
             $model->p_master_unit_id = $_POST['Order']['p_master_unit_id'];
             $model->order_name = $_POST['Order']['order_name'];
@@ -86,6 +88,9 @@ class OrderController extends Controller
               $latlng = Unit::find()->select(['unit_lat','unit_lng'])->where(['=','p_master_unit_id', $_POST['Order']['p_master_unit_id']])->asArray()->one();
               $model->order_lat = $latlng['unit_lat'];
               $model->order_lng = $latlng['unit_lng'];
+            }
+            if($customer['customer_is_member'] > 0 && $unit['unit_member_discount'] > 0){
+              $model->order_discount = $unit['unit_member_discount'];
             }
       			if($model->save()){
               return $this->redirect(['view', 'id' => $model->order_id]);
@@ -216,12 +221,33 @@ class OrderController extends Controller
     public function actionCapacity($id,$date)
     {
         $temp = array();
-        $capacity = Unit::find()->select(['unit_capacity'])->where(['=','p_master_unit_id', $id])->asArray()->one();
+        $temp['open'] = 0;
+        //die(date("l", strtotime($date)));
+        $unit = Unit::find()->where(['=','p_master_unit_id', $id])->asArray()->one();
         $registered = Order::find()->where(['and',['=','p_master_unit_id', $id],['=','order_date', $date]])->count();
-        $temp = array(
-          'capacity' => $capacity['unit_capacity'],
-          'registered' => $registered
-        );
+        if($unit['monday'] > 0 && date("l", strtotime($date)) == 'Monday'){
+          $temp['open'] = 1;
+        }
+        if($unit['tuesday'] > 0 && date("l", strtotime($date)) == 'Tuesday'){
+          $temp['open'] = 1;
+        }
+        if($unit['wednesday'] > 0 && date("l", strtotime($date)) == 'Wednesday'){
+          $temp['open'] = 1;
+        }
+        if($unit['thursday'] > 0 && date("l", strtotime($date)) == 'Thursday'){
+          $temp['open'] = 1;
+        }
+        if($unit['friday'] > 0 && date("l", strtotime($date)) == 'Friday'){
+          $temp['open'] = 1;
+        }
+        if($unit['saturday'] > 0 && date("l", strtotime($date)) == 'Saturday'){
+          $temp['open'] = 1;
+        }
+        if($unit['sunday'] > 0 && date("l", strtotime($date)) == 'Sunday'){
+          $temp['open'] = 1;
+        }
+        $temp['capacity'] = $unit['unit_capacity'];
+        $temp['registered'] = $registered;
         //die(print_r($latlng));
         echo json_encode($temp);
 
@@ -250,6 +276,7 @@ class OrderController extends Controller
         $cost = array();
         $model = $this->findModel($id);
         $unit = Unit::find()->where(['=','p_master_unit_id', $model->p_master_unit_id])->asArray()->one();
+        $customer = Customer::find()->where(['=','customer_id', $model->customer_id])->asArray()->one();
         $model->order_finish = date("Y-m-d H:i:s");
 
         /*Hitung Biaya Antar Jemput*/
@@ -324,10 +351,12 @@ class OrderController extends Controller
         }
         $model->order_cost_overtime = $cost['overtime'];
 
-        /*komsisi*/
-        //$comissioner=Yii::$app->params['app_cost_persentase'];
-
         $model->order_total_cost = $model->order_price + $model->order_cost_pickup + $model->order_cost_delivery + $model->order_cost_overtime;
+
+        /*discount*/
+        if($model->order_discount > 0){
+          $model->order_total_cost_discount = $model->order_total_cost - (($model->order_discount / 100) * $model->order_total_cost);
+        }
 
         if($model->update() !== false){
   				return $this->redirect(Yii::$app->request->referrer);

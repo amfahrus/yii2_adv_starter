@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'unit_radius',
             'unit_price_6',
             'unit_price_12',
+            'unit_member_discount',
             'unit_price_overtime',
             'unit_price_pickup',
             'unit_price_delivery',

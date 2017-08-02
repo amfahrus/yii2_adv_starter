@@ -60,7 +60,7 @@ return [
         'view' => [
              'theme' => [
                  'pathMap' => [
-                    '@app/views' => '@backend/views/adminlte'
+                    '@app/views' => '@backend/views/adminlte' 
                  ],
              ],
         ],

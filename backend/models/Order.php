@@ -33,6 +33,9 @@ class Order extends \yii\db\ActiveRecord
     public $cost_delivery;
     public $cost_overtime;
     public $total_cost;
+    public $start;
+    public $end;
+    public $sum;
     public static function tableName()
     {
         return 'order';
@@ -45,9 +48,9 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             [['customer_id', 'p_master_unit_id', 'order_name', 'order_address', 'order_date', 'order_price','order_hours'], 'required'],
-            [['customer_id', 'p_master_unit_id', 'order_pickup', 'order_delivery'], 'integer'],
+            [['customer_id', 'p_master_unit_id', 'order_pickup', 'order_delivery', 'order_discount'], 'integer'],
             [['order_address'], 'string'],
-            [['order_price','order_hours','order_cost_pickup','order_cost_delivery','order_cost_overtime','order_total_cost'], 'number'],
+            [['order_price','order_hours','order_cost_pickup','order_cost_delivery','order_cost_overtime','order_total_cost','order_total_cost_discount'], 'number'],
             [['order_start', 'order_finish', 'order_date'], 'safe'],
             [['order_name'], 'string', 'max' => 200],
             [['order_lat', 'order_lng'], 'string', 'max' => 45],
@@ -83,6 +86,8 @@ class Order extends \yii\db\ActiveRecord
             'order_cost_delivery' => 'Biaya Antar',
             'order_cost_overtime' => 'Biaya Overtime',
             'order_total_cost' => 'Total Biaya',
+            'order_discount' => 'Diskon',
+            'order_total_cost_discount' => 'Total Biaya Diskon',
         ];
     }
 

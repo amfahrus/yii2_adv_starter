@@ -114,8 +114,12 @@ $listData= array(
             function (e){
               if($(\'#order-p_master_unit_id\').val() > 0){
                   $.getJSON( "'.urldecode(Yii::$app->urlManager->createUrl('order/capacity/')).'?id="+$(\'#order-p_master_unit_id\').val()+"&date="+e.format(), function( data ) {
-                    if(Number(data.registered) == Number(data.capacity)){
+                    if(Number(data.registered) == Number(data.capacity) && Number(data.open) > 0){
                       alert(\'Sudah Penuh Terisi \'+data.registered+\' Pendaftar, Silahkan Coba Tanggal Lain!\');
+                      $("#order-order_date").val("");
+                    }
+                    if(Number(data.open) == 0){
+                      alert(\'Libur pada hari yang dipilih, Silahkan Coba Tanggal Lain!\');
                       $("#order-order_date").val("");
                     }
                     //alert(data);

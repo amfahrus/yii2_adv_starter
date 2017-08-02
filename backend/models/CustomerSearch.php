@@ -18,8 +18,8 @@ class CustomerSearch extends Customer
     public function rules()
     {
         return [
-            [['customer_id', 'user_id'], 'integer'],
-            [['username', 'email', 'customer_name', 'customer_phone', 'customer_address', 'device_id', 'device_platform'], 'safe'],
+            [['customer_id', 'user_id','customer_is_member'], 'integer'],
+            [['username', 'email', 'customer_name', 'customer_code', 'customer_phone', 'customer_address', 'device_id', 'device_platform'], 'safe'],
         ];
     }
 
@@ -75,11 +75,13 @@ class CustomerSearch extends Customer
         $query->andFilterWhere([
             'customer_id' => $this->customer_id,
             'user_id' => $this->user_id,
+            'customer_is_member' => $this->customer_is_member,
         ]);
 
         $query->andFilterWhere(['like', 'customer_name', $this->customer_name])
             ->andFilterWhere(['like', 'customer_phone', $this->customer_phone])
             ->andFilterWhere(['like', 'customer_address', $this->customer_address])
+            ->andFilterWhere(['like', 'customer_code', $this->customer_code])
             ->andFilterWhere(['like', 'device_id', $this->device_id])
             ->andFilterWhere(['like', 'device_platform', $this->device_platform]);
 

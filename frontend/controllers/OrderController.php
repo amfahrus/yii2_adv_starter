@@ -229,15 +229,36 @@ class OrderController extends Controller
 
     public function actionCapacity($id,$date)
     {
-        $temp = array();
-        $capacity = Unit::find()->select(['unit_capacity'])->where(['=','p_master_unit_id', $id])->asArray()->one();
-        $registered = Order::find()->where(['and',['=','p_master_unit_id', $id],['=','order_date', $date]])->count();
-        $temp = array(
-          'capacity' => $capacity['unit_capacity'],
-          'registered' => $registered
-        );
-        //die(print_r($latlng));
-        echo json_encode($temp);
+      $temp = array();
+      $temp['open'] = 0;
+      //die(date("l", strtotime($date)));
+      $unit = Unit::find()->where(['=','p_master_unit_id', $id])->asArray()->one();
+      $registered = Order::find()->where(['and',['=','p_master_unit_id', $id],['=','order_date', $date]])->count();
+      if($unit['monday'] > 0 && date("l", strtotime($date)) == 'Monday'){
+        $temp['open'] = 1;
+      }
+      if($unit['tuesday'] > 0 && date("l", strtotime($date)) == 'Tuesday'){
+        $temp['open'] = 1;
+      }
+      if($unit['wednesday'] > 0 && date("l", strtotime($date)) == 'Wednesday'){
+        $temp['open'] = 1;
+      }
+      if($unit['thursday'] > 0 && date("l", strtotime($date)) == 'Thursday'){
+        $temp['open'] = 1;
+      }
+      if($unit['friday'] > 0 && date("l", strtotime($date)) == 'Friday'){
+        $temp['open'] = 1;
+      }
+      if($unit['saturday'] > 0 && date("l", strtotime($date)) == 'Saturday'){
+        $temp['open'] = 1;
+      }
+      if($unit['sunday'] > 0 && date("l", strtotime($date)) == 'Sunday'){
+        $temp['open'] = 1;
+      }
+      $temp['capacity'] = $unit['unit_capacity'];
+      $temp['registered'] = $registered;
+      //die(print_r($latlng));
+      echo json_encode($temp);
 
     }
 

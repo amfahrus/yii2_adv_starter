@@ -9,7 +9,7 @@ use backend\models\Unit;
 /* @var $this yii\web\View */
 /* @var $model backend\models\OrderSearch */
 /* @var $form yii\widgets\ActiveForm */
-$unit = ArrayHelper::map(Unit::find()->all(),'unit_name','unit_name');
+$unit = ArrayHelper::map(Unit::find()->all(),'p_master_unit_id','unit_name');
 ?>
 
 <div class="order-search">
@@ -35,7 +35,7 @@ $unit = ArrayHelper::map(Unit::find()->all(),'unit_name','unit_name');
 
     <?php // echo $form->field($model, 'order_price') ?>
 
-    <?php echo $form->field($model, 'unit_name')->dropdownList($unit,['prompt'=>'-Unit-']) ?>
+    <?php echo $form->field($model, 'p_master_unit_id')->dropdownList($unit,['prompt'=>'-Unit-']) ?>
 
     <?php echo $form->field($model, 'order_date')->widget(DatePicker::className(), [
         'language' => 'en',

@@ -50,7 +50,7 @@ class Unit extends \yii\db\ActiveRecord
     {
         return [
             [['unit_name', 'unit_code', 'unit_status'], 'required'],
-            [['unit_status', 'unit_parent', 'unit_capacity', 'unit_radius', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'], 'integer'],
+            [['unit_status', 'unit_parent', 'unit_member_discount', 'unit_capacity', 'unit_radius', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'], 'integer'],
             [['hours','price', 'unit_price_6', 'unit_price_12'], 'number'],
             [['unit_lat', 'unit_lng', 'unit_price_overtime', 'unit_price_pickup', 'unit_price_delivery'], 'string', 'max' => 55],
             [['label','unit_name', 'unit_code'], 'string', 'max' => 45],
@@ -74,6 +74,7 @@ class Unit extends \yii\db\ActiveRecord
             'unit_radius' => 'Unit Radius Meter',
             'unit_price_6' => 'Unit Price 6 Hour',
             'unit_price_12' => 'Unit Price 12 Hour',
+            'unit_member_discount' => 'Unit Member Discount',
             'unit_price_overtime' => 'Unit Price Overtime',
             'unit_price_pickup' => 'Unit Price Pickup',
             'unit_price_delivery' => 'Unit Price Delivery',

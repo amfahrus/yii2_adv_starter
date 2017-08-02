@@ -39,8 +39,8 @@ class Customer extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'username', 'email', 'password', 'customer_name', 'customer_phone', 'customer_address'], 'required'],
-            [['user_id'], 'integer'],
-            [['customer_address', 'device_id'], 'string'],
+            [['user_id','customer_is_member'], 'integer'],
+            [['customer_address', 'customer_code', 'device_id'], 'string'],
             [['customer_name'], 'string', 'max' => 200],
             [['customer_phone'], 'string', 'max' => 45],
             [['device_platform'], 'string', 'max' => 50],
@@ -59,6 +59,8 @@ class Customer extends \yii\db\ActiveRecord
             'customer_name' => 'Customer Name',
             'customer_phone' => 'Customer Phone',
             'customer_address' => 'Customer Address',
+            'customer_code' => 'Customer Code',
+            'customer_is_member' => 'Customer Is Member',
             'device_id' => 'Device ID',
             'device_platform' => 'Device Platform',
         ];

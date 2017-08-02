@@ -35,6 +35,7 @@ $this->registerJsFile(
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'options'=>['class'=>'grid-view table-responsive'],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 

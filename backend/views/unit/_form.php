@@ -38,8 +38,10 @@ $parents = array_merge($root_parent, $parent);
     <?= $form->field($model, 'unit_radius')->textInput(['placeholder' => "KM"]) ?>
 
     <?= $form->field($model, 'unit_price_6')->textInput() ?>
-    
+
     <?= $form->field($model, 'unit_price_12')->textInput() ?>
+
+    <?= $form->field($model, 'unit_member_discount')->textInput() ?>
 
     <?= $form->field($model, 'unit_price_overtime')->textInput() ?>
 

@@ -21,14 +21,28 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'options'=>['class'=>'grid-view table-responsive'],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'username',
-            'email',
+            [
+             'attribute' => 'username',
+             'value' => 'user.username'
+            ],
+            [
+             'attribute' => 'email',
+             'value' => 'user.email'
+            ],
             'customer_name',
             'customer_phone',
-            'customer_address:ntext',
+            'customer_code',
+            [
+             'attribute' => 'customer_is_member',
+             'value' => function ($model) {
+                return $model->customer_is_member > 0 ? 'Ya' : 'Tidak';
+             }
+            ],
+            //'customer_address:ntext',
             // 'customer_lat',
             // 'customer_lng',
             // 'device_id:ntext',

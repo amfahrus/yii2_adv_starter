@@ -30,15 +30,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             [
               'label' => 'Username',
-              'value' => $user->username,
+              'value' => $model->user->username,
             ],
             [
               'label' => 'Email',
-              'value' => $user->email,
+              'value' => $model->user->email,
             ],
             'customer_name',
+            'customer_code',
             'customer_phone',
             'customer_address:ntext',
+            [
+               'attribute' => 'customer_is_member',
+               'format'=>'raw',
+               'value'=> $model->customer_is_member == 1 ? 'Ya' : 'Tidak'
+            ],
             'device_id:ntext',
             'device_platform',
         ],

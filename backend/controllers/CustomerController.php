@@ -77,9 +77,11 @@ class CustomerController extends Controller
             //die(var_dump($user));
             if($user->save()){
                $model->user_id = $user->id;
+               $model->customer_code = $this->getCode();
                $model->customer_name = $_POST['Customer']['customer_name'];
                $model->customer_phone = $_POST['Customer']['customer_phone'];
                $model->customer_address = $_POST['Customer']['customer_address'];
+               $model->customer_is_member = $_POST['Customer']['customer_is_member'];
                $model->device_id = $_POST['Customer']['device_id'];
                $model->device_platform = $_POST['Customer']['device_platform'];
                $model->save();
@@ -109,6 +111,7 @@ class CustomerController extends Controller
              $model->customer_name = $_POST['Customer']['customer_name'];
              $model->customer_phone = $_POST['Customer']['customer_phone'];
              $model->customer_address = $_POST['Customer']['customer_address'];
+             $model->customer_is_member = $_POST['Customer']['customer_is_member'];
              $model->device_id = $_POST['Customer']['device_id'];
              $model->device_platform = $_POST['Customer']['device_platform'];
 
@@ -159,6 +162,15 @@ class CustomerController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function getCode()
+    {
+        if (($model = Customer::find()->orderBy('customer_id DESC')->one()) !== null) {
+            return str_pad($model->customer_id, 4, '0', STR_PAD_LEFT).'/'.date("m").date("y");
+        } else {
+            return str_pad(1, 4, '0', STR_PAD_LEFT).'/'.date("m").date("y");
         }
     }
 }
