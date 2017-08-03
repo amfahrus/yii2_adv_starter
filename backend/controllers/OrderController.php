@@ -120,7 +120,7 @@ class OrderController extends Controller
             return $this->redirect(['index']);
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
             $model->customer_id = $_POST['Order']['customer_id'];
             $model->p_master_unit_id = $_POST['Order']['p_master_unit_id'];
             $model->order_name = $_POST['Order']['order_name'];
