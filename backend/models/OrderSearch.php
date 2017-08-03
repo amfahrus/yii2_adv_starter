@@ -106,7 +106,7 @@ class OrderSearch extends Order
 
     public function search_customer($params,$customer)
     {
-        $query = Order::find()->where(['and','customer_id',$customer]);
+        $query = Order::find()->where(['=','customer_id',$customer]);
         $query->joinWith('unit');
 
         // add conditions that should always apply here

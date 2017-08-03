@@ -38,6 +38,42 @@ class CustomerController extends ActiveController
 		return $behaviors;
     }
 
+    public function actionProfile()
+    {
+        $param = Yii::$app->getRequest()->getBodyParams();
+        $user = Yii::$app->user->identity->id;
+        $model = $this->findModel($param['id'],$user);
+        $customer = Customer::find()->where(['=','user_id',$user])->asArray()->one();
+
+        if ($customer->load(Yii::$app->getRequest()->getBodyParams())) {
+            $customer->customer_id = $customer->customer_id;
+            $customer->user_id = $customer->user_id;
+            $customer->customer_name = (!empty($param['customer_name']))?$param['customer_name']:$customer->customer_name;
+            $customer->customer_phone = (!empty($param['customer_phone']))?$param['customer_phone']:$customer->customer_phone;
+            $customer->customer_address = (!empty($param['customer_address']))?$param['customer_address']:$customer->customer_address;
+            $customer->customer_code = (!empty($param['customer_code']))?$param['customer_code']:$customer->customer_code;
+            $customer->customer_is_member = (!empty($param['customer_is_member']))?$param['customer_is_member']:$customer->customer_is_member;
+            $customer->device_id = (!empty($param['device_id']))?$param['device_id']:$customer->device_id;
+            $customer->device_platform = (!empty($param['device_platform']))?$param['device_platform']:$customer->device_platform;
+            if($customer->update()){
+              return [
+                'code' => 1,
+                'message' => 'Update sukses'
+              ];
+            } else {
+              return [
+                'code' => 0,
+                'message' => 'Update gagal'
+              ];
+            }
+        } else {
+          return [
+            'code' => 0,
+            'message' => 'Update gagal'
+          ];
+        }
+    }
+
     public function actionStatus()
     {
       $result = array();
@@ -141,7 +177,7 @@ class CustomerController extends ActiveController
      * @param integer $id
      * @return mixed
      */
-    public function actionUpd($id)
+    public function actionUpd()
     {
         $param = Yii::$app->getRequest()->getBodyParams();
         $user = Yii::$app->user->identity->id;

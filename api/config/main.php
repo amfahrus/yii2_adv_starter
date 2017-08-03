@@ -48,6 +48,7 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'v1/customer',
                     'extraPatterns' => [
+                        'POST profile' => 'profile',
                         'GET status' => 'status',
                         'GET detail' => 'detail',
                         'POST add' => 'add',
@@ -72,6 +73,7 @@ return [
                         'POST login' => 'login',
                         'POST signup' => 'signup',
                         'GET logout' => 'logout',
+                        'POST reset' => 'reset',
                     ],
                 ],
             ],
